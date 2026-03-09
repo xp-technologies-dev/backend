@@ -5,9 +5,28 @@ import { prisma } from '~/utils/prisma';
 
 const log = scopedLogger('user-settings');
 
+const customThemeSchema = z.object({
+  primary: z.string().optional(),
+  secondary: z.string().optional(),
+  tertiary: z.string().optional(),
+  activeTheme: z.object({
+    primary: z.string(),
+    secondary: z.string(),
+    tertiary: z.string(),
+  }).optional(),
+  savedCustomThemes: z.array(z.object({
+    id: z.string().transform(val => val.replace(/[^a-zA-Z0-9-]/g, '')),
+    name: z.string(),
+    primary: z.string(),
+    secondary: z.string(),
+    tertiary: z.string(),
+  })).max(30).optional(),
+  hiddenDefaultThemes: z.array(z.string()).optional(),
+}).nullable().optional();
+
 const userSettingsSchema = z.object({
   applicationTheme: z.string().nullable().optional(),
-  customTheme: z.any().nullable().optional(),
+  customTheme: customThemeSchema,
   applicationLanguage: z.string().optional().default('en'),
   defaultSubtitleLanguage: z.string().nullable().optional(),
   proxyUrls: z.array(z.string()).nullable().optional(),
