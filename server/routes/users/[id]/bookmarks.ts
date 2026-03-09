@@ -4,7 +4,7 @@ import { bookmarks } from '@prisma/client';
 
 const bookmarkMetaSchema = z.object({
   title: z.string(),
-  year: z.number().optional(),
+  year: z.number().nullable().optional(),
   poster: z.string().optional(),
   type: z.enum(['movie', 'show']),
 });

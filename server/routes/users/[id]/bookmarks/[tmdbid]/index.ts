@@ -6,7 +6,7 @@ const log = scopedLogger('user-bookmarks');
 
 const bookmarkMetaSchema = z.object({
   title: z.string(),
-  year: z.number(),
+  year: z.number().nullable().optional(),
   poster: z.string().optional(),
   type: z.enum(['movie', 'show']),
 });
