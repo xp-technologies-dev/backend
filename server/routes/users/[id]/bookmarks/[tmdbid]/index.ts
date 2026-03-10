@@ -14,7 +14,7 @@ const bookmarkMetaSchema = z.object({
 const bookmarkRequestSchema = z.object({
   meta: bookmarkMetaSchema.optional(),
   tmdbId: z.string().optional(),
-  group: z.union([z.string(), z.array(z.string())]).optional(),
+  group: z.union([z.string(), z.array(z.string()).max(30)]).optional(),
   favoriteEpisodes: z.array(z.string()).optional(),
 });
 
