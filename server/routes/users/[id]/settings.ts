@@ -20,6 +20,9 @@ const customThemeSchema = z.object({
     primary: z.string(),
     secondary: z.string(),
     tertiary: z.string(),
+    customPrimaryHex: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+    customSecondaryHex: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+    customTertiaryHex: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
   })).max(30).optional(),
   hiddenDefaultThemes: z.array(z.string()).optional(),
 }).nullable().optional();
