@@ -73,7 +73,7 @@ export default defineEventHandler(async event => {
 
   try {
     const body = await readBody(event);
-    const validatedBody = z.array(progressItemSchema).max(1000).parse(body);
+    const validatedBody = z.array(progressItemSchema).max(5000).parse(body);
 
     const existingItems = await prisma.progress_items.findMany({
       where: { user_id: userId },
