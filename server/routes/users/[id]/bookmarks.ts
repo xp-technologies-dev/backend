@@ -51,7 +51,7 @@ export default defineEventHandler(async event => {
 
   if (method === 'PUT') {
     const body = await readBody(event);
-    const validatedBody = z.array(bookmarkDataSchema).max(1000).parse(body);
+    const validatedBody = z.array(bookmarkDataSchema).max(10000).parse(body);
 
     const now = new Date();
     const upserts = validatedBody.map((item: any) => {
