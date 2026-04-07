@@ -68,7 +68,7 @@ export default defineEventHandler(async event => {
         const results = [];
 
         for (const validatedBody of items) {
-          const itemTmdbId = items.length === 1 ? tmdbId : (validatedBody.tmdbId ?? tmdbId);
+          const itemTmdbId = validatedBody.tmdbId;
           const watchedAt = defaultAndCoerceDateTime(validatedBody.watchedAt);
           const now = new Date();
 
