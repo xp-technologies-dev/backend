@@ -64,6 +64,14 @@ export default defineEventHandler(async event => {
       const parsed = bodySchema.parse(body);
       const items = Array.isArray(parsed) ? parsed : [parsed];
 
+      // Guard against route/body mismatches (e.g. /watch-history/import for single writes)
+      if (items.length === 1 && tmdbId && tmdbId !== items[0].tmdbId) {
+        throw createError({
+          statusCode: 400,
+          message: 'tmdbId in URL does not match request body',
+        });
+      }
+
       const transactionResults = await prisma.$transaction(async tx => {
         const results = [];
 
