@@ -262,8 +262,8 @@ export default defineEventHandler(async event => {
           tmdb_id_user_id_season_id_episode_id: {
             tmdb_id: tmdbId,
             user_id: userId,
-            season_id: validatedBody.meta.type === 'movie' ? '\n' : validatedBody.seasonId || null,
-            episode_id: validatedBody.meta.type === 'movie' ? '\n' : validatedBody.episodeId || null,
+            season_id: validatedBody.seasonId || '\n',
+            episode_id: validatedBody.episodeId || '\n',
           },
         },
         update: {
@@ -276,8 +276,8 @@ export default defineEventHandler(async event => {
           id: uuidv7(),
           tmdb_id: tmdbId,
           user_id: userId,
-          season_id: validatedBody.meta.type === 'movie' ? '\n' : validatedBody.seasonId || null,
-          episode_id: validatedBody.meta.type === 'movie' ? '\n' : validatedBody.episodeId || null,
+          season_id: validatedBody.seasonId || '\n',
+          episode_id: validatedBody.episodeId || '\n',
           season_number: validatedBody.seasonNumber || null,
           episode_number: validatedBody.episodeNumber || null,
           duration: BigInt(validatedBody.duration),

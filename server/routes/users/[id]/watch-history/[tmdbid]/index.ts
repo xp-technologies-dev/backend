@@ -69,9 +69,10 @@ export default defineEventHandler(async event => {
         const watchedAt = defaultAndCoerceDateTime(validatedBody.watchedAt);
         const now = new Date();
 
-        // Normalize IDs for movies (use '\n' instead of null to satisfy unique constraint)
-        const normSeasonId = validatedBody.meta.type === 'movie' ? '\n' : validatedBody.seasonId ?? null;
-        const normEpisodeId = validatedBody.meta.type === 'movie' ? '\n' : validatedBody.episodeId ?? null;
+        // Normalize IDs: use '\n' as a sentinel instead of null to satisfy Prisma's
+        // composite unique key constraint (Prisma v7 drops null from where clauses)
+        const normSeasonId = validatedBody.seasonId || '\n';
+        const normEpisodeId = validatedBody.episodeId || '\n';
 
         const data = {
           duration: parseFloat(validatedBody.duration),
