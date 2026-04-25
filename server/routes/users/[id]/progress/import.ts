@@ -2,6 +2,7 @@ import { useAuth } from '~/utils/auth';
 import { z } from 'zod';
 import { uuidv7 } from 'uuidv7';
 import { scopedLogger } from '~/utils/logger';
+import pLimit from 'p-limit';
 
 const log = scopedLogger('progress-import');
 
@@ -156,7 +157,8 @@ export default defineEventHandler(async event => {
     if (upsertPromises.length === 0) return [];
 
     try {
-      const transactionResults = await prisma.$transaction(upsertPromises);
+      const limit = pLimit(10);
+      const transactionResults = await Promise.all(upsertPromises.map(p => limit(() => p)))
 
       const results = transactionResults.map(result => ({
         id: result.id,
